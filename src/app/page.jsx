@@ -1,41 +1,12 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import clsx from 'clsx'
 
 import { Card } from '@/components/Card'
 import { Container } from '@/components/Container'
 import { GitHubIcon, LinkedInIcon } from '@/components/SocialIcons'
 import logoPlanetaria from '@/images/logos/marvyaLogo.png'
-import image1 from '@/images/photos/image-1.png'
-import image2 from '@/images/photos/image-2.png'
-import image3 from '@/images/photos/image-3.png'
-import image4 from '@/images/photos/image-4.png'
-import image5 from '@/images/photos/image-5.png'
 import { getAllArticles } from '@/lib/articles'
 import { formatDate } from '@/lib/formatDate'
-
-function MailIcon(props) {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="none"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden="true"
-      {...props}
-    >
-      <path
-        d="M2.75 7.75a3 3 0 0 1 3-3h12.5a3 3 0 0 1 3 3v8.5a3 3 0 0 1-3 3H5.75a3 3 0 0 1-3-3v-8.5Z"
-        className="fill-zinc-100 stroke-zinc-400 dark:fill-zinc-100/10 dark:stroke-zinc-500"
-      />
-      <path
-        d="m4 6 6.024 5.479a2.915 2.915 0 0 0 3.952 0L20 6"
-        className="stroke-zinc-400 dark:stroke-zinc-500"
-      />
-    </svg>
-  )
-}
 
 function BriefcaseIcon(props) {
   return (
@@ -55,19 +26,6 @@ function BriefcaseIcon(props) {
       <path
         d="M3 14.25h6.249c.484 0 .952-.002 1.316.319l.777.682a.996.996 0 0 0 1.316 0l.777-.682c.364-.32.832-.319 1.316-.319H21M8.75 6.5V4.75a2 2 0 0 1 2-2h2.5a2 2 0 0 1 2 2V6.5"
         className="stroke-zinc-400 dark:stroke-zinc-500"
-      />
-    </svg>
-  )
-}
-
-function ArrowDownIcon(props) {
-  return (
-    <svg viewBox="0 0 16 16" fill="none" aria-hidden="true" {...props}>
-      <path
-        d="M4.75 8.75 8 12.25m0 0 3.25-3.5M8 12.25v-8.5"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
       />
     </svg>
   )
@@ -162,33 +120,6 @@ function Resume() {
   )
 }
 
-function Photos() {
-  let rotations = ['rotate-2', '-rotate-2', 'rotate-2', 'rotate-2', '-rotate-2']
-
-  return (
-    <div className="mt-16 sm:mt-20">
-      <div className="-my-4 flex justify-center gap-5 overflow-hidden py-4 sm:gap-8">
-        {[image1, image2, image3, image4, image5].map((image, imageIndex) => (
-          <div
-            key={image.src}
-            className={clsx(
-              'relative aspect-[9/10] w-44 flex-none overflow-hidden rounded-xl bg-zinc-100 sm:w-72 sm:rounded-2xl dark:bg-zinc-800',
-              rotations[imageIndex % rotations.length],
-            )}
-          >
-            <Image
-              src={image}
-              alt=""
-              sizes="(min-width: 640px) 900px, 560px"
-              className="absolute inset-0 h-full w-full object-cover"
-            />
-          </div>
-        ))}
-      </div>
-    </div>
-  )
-}
-
 export default async function Home() {
   let articles = (await getAllArticles()).slice(0, 4)
 
@@ -197,18 +128,47 @@ export default async function Home() {
       <Container className="mt-9">
         <div className="max-w-2xl">
           <h1 className="text-4xl font-bold tracking-tight text-zinc-800 sm:text-5xl dark:text-zinc-100">
-            Full Stack Developer, CTO, Freelancer, and More.
+            Hey, I&apos;m Omar 👋
           </h1>
           <p className="mt-6 text-base text-zinc-600 dark:text-zinc-400">
-            I’m Omar Ghanaim, a full stack developer and CTO at Marvya, an
-            ecommerce agency specializing in Shopify stores. With 3 years of
-            experience, I’ve built, optimized, and scaled numerous online stores
-            and web applications. Beyond my work, I’m passionate about
-            constantly improving myself, whether through fitness, exploring new
-            destinations with friends, or diving into a good card game. Now, I’m
-            offering my expertise as a freelancer to help businesses create
-            custom solutions that drive growth.
+            I build <strong>Shopify stores and apps</strong>, focusing on{' '}
+            <strong>developer speed and experience</strong>{' '}
+            over writing &ldquo;perfect&rdquo; code. Code should be{' '}
+            <strong>fast, maintainable, and never get in the way</strong>.
           </p>
+
+          <h2 className="mt-6 text-2xl font-semibold text-zinc-800 dark:text-zinc-100">
+            A Bit About Me
+          </h2>
+          <p className="mt-4 text-base text-zinc-600 dark:text-zinc-400">
+            I&apos;ve been working with <strong>Shopify since 2021</strong>—building
+            themes, coding custom apps, and making sure stores{' '}
+            <strong>run fast and smooth</strong>. Along the way, I&apos;ve learned a
+            lot about{' '}
+            <strong>
+              performance, scalability, and keeping things simple
+            </strong>{' '}
+            (because simplicity is beautiful).
+          </p>
+
+          <h2 className="mt-6 text-2xl font-semibold text-zinc-800 dark:text-zinc-100">
+            What You&apos;ll Find Here
+          </h2>
+          <ul className="mt-4 text-base text-zinc-600 dark:text-zinc-400">
+            <li>
+              💻 <strong>My Work</strong> – A collection of projects I&apos;ve worked
+              on, from Shopify themes to custom apps.
+            </li>
+            <li>
+              ✍️ <strong>The Blog</strong> – Thoughts on Shopify development,
+              dev tips, and lessons learned (often the hard way).
+            </li>
+            <li>
+              📩 <strong>Leading a Dev Team</strong> – What I&apos;ve figured out
+              while working as a lead developer with a team.
+            </li>
+          </ul>
+
           <div className="mt-6 flex gap-6">
             <SocialLink
               href="https://github.com/GitItOmar"
@@ -224,7 +184,6 @@ export default async function Home() {
         </div>
       </Container>
 
-      <Photos />
       <Container className="mt-24 md:mt-28">
         <div className="mx-auto grid max-w-xl grid-cols-1 gap-y-20 lg:max-w-none lg:grid-cols-2">
           <div className="flex flex-col gap-16">

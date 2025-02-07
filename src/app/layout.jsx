@@ -6,10 +6,10 @@ import '@/styles/tailwind.css'
 export const metadata = {
   title: {
     template: '%s - Omar Ghanaim',
-    default: 'Omar Ghanaim - Full Stack Developer, CTO, and Freelancer',
+    default: 'Omar Ghanaim - Shopify Developer & CTO',
   },
   description:
-    'I’m Omar, a full stack developer and CTO with 3 years of experience at an agency. I specialize in creating Shopify stores and developing custom web applications, and I’m now offering my expertise as a freelancer.',
+    "Hey, I'm Omar! I build Shopify stores and apps, focusing on speed, usability, and clean solutions. Always learning, always improving.",
   alternates: {
     types: {
       'application/rss+xml': `${process.env.NEXT_PUBLIC_SITE_URL}/feed.xml`,

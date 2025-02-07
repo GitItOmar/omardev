@@ -43,8 +43,10 @@ export default async function ArticlesIndex() {
 
   return (
     <SimpleLayout
-      title="Writing on software development, eCommerce, and business growth."
-      intro="A collection of my insights on full stack development, Shopify stores, leadership, and self-improvement, organized in chronological order."
+      title="Sharing Thoughts on Development, Shopify, and Growth."
+      intro={`I write about Shopify development, coding best practices, leadership, and the lessons I’ve learned along the way. Whether it’s a deep dive into performance optimization, practical coding tips, or reflections on working with a team, you’ll find it all here—organized in a way that (hopefully) makes sense.
+
+No fluff, no clickbait—just real insights from hands-on experience.`}
     >
       <div className="md:border-l md:border-zinc-100 md:pl-6 md:dark:border-zinc-700/40">
         <div className="flex max-w-3xl flex-col space-y-16">

@@ -1,0 +1,135 @@
+import { ArticleLayout } from '@/components/ArticleLayout'
+
+export const article = {
+  author: 'Omar Ghanaim',
+  date: '2025-02-07',
+  title: 'Why I Hate Working with Shopify Theme Store Themes',
+}
+
+export const metadata = {
+  title: article.title,
+  description: 'Why pre-built Shopify themes create more problems than they solve, and why custom themes are the better choice.',
+}
+
+export default (props) => <ArticleLayout article={article} {...props} />
+
+## Introduction  
+
+Shopify Theme Store themes are **pre-built templates** you can grab for around **$300** to get a store up and running fast. Sounds great, right? A clean-looking, professional theme that saves time?  
+
+Well… **not really.**  
+
+These themes are **not built for scalability or maintainability**. They’re designed to be **as flexible as possible** to fit different types of businesses. And that’s exactly where the **problems begin**.  
+
+Overly flexible code often means **deeply nested logic, packed conditionals, and a structure that’s just hard to follow**. Even Shopify’s **Dawn theme**, which is relatively simple, takes time to understand because of how things are built.  
+
+And it’s not just me—**every developer I’ve worked with has struggled with this at some point**. If you’ve ever tried to tweak a bought theme beyond basic edits, you’ve probably felt the pain too.  
+
+## The Problem with Pre-Built Shopify Themes  
+
+If you’ve ever worked with a Shopify theme straight from the **Theme Store**, you already know the struggle. They **look great in the demo**, but the moment you start customizing, things get messy.  
+
+### Bloated Code 🚨  
+
+These themes try to be **everything for everyone**, which means they come loaded with **unnecessary features, excessive CSS/JS, and third-party scripts**. The result? **Slower load times and unnecessary complexity**. You end up spending more time **removing** things than actually building what you need.  
+
+### Generic Design 🎨  
+
+They look polished at first glance, but the **structure is rigid**. Customizing beyond basic edits is frustrating because the **code isn’t built for flexibility**, just to look good in a preview.  
+
+### Feature Overload 🔧  
+
+To appeal to as many merchants as possible, these themes cram in **every possible feature**. The more they add, the **harder they become to maintain and debug**. You change one thing, and five others break.  
+
+## Customization Hell 🔥  
+
+What seems like "easy customization" quickly turns into **frustration, trial-and-error, and hours of debugging**.  
+
+### Hardcoded Structures 🏗️  
+
+Many themes **hardcode layouts and logic directly into Liquid files**, making even simple adjustments a nightmare. You move one thing and suddenly break something else.  
+
+### Overuse of Sections 📦  
+
+Shopify markets **sections** as a flexible way to customize stores, but many themes **overuse them**, making the JSON config needlessly complex and restricting real customization.  
+
+### Confusing Class Naming 🎭  
+
+Pre-built themes often come with **inconsistent, overly specific, or completely random class names**. Instead of a logical naming system like **BEM or utility classes**, you get a mix of **redundant styles and inline CSS** that makes styling much harder.  
+
+## Performance Issues 🚀  
+
+They look smooth in the demo, but once real content is added, the **performance tanks**.  
+
+### Too Many Scripts & Dependencies 📜  
+
+Most pre-built themes come loaded with **third-party integrations and bloated JavaScript files**—half of which you **don’t even need**. The result? **Too many HTTP requests and render-blocking scripts** slowing everything down.  
+
+### Unoptimized Assets 🎨  
+
+
+Fonts? **Excessive, often loaded from multiple sources.**  
+CSS? **A mix of unused styles and redundant rules.**  
+JavaScript? **Too many global variables and no modularity.**  
+
+### Slow Loading Times ⏳  
+
+Shopify’s own Lighthouse scores **drop fast** when a theme is packed with **bloated styles and scripts**. Instead of optimizing for speed, these themes **fail Core Web Vitals right out of the box**, meaning you’ll **spend hours debugging performance issues** before you even get to real customizations.  
+
+## Bad Developer Experience 🤯  
+
+If you’re a developer, working with a pre-built Shopify theme can feel like **fighting against the theme, not working with it**.  
+
+### Unnecessary Complexity 🎭  
+
+Removing **one feature**? Cool, you just **broke five others**. Many themes have **deeply connected logic**, meaning tweaking one section **causes unexpected issues elsewhere**.  
+
+### Lack of Consistency 🔄  
+
+Every Shopify theme developer has **their own way of doing things**, so jumping from one theme to another **feels like learning a new framework every time**. Different file structures, naming conventions, and **zero standardization**.  
+
+## Business & Client Problems 💸  
+
+The pain of working with pre-built themes isn’t just for developers—**clients feel it too**.  
+
+### Clients Expect Unlimited Flexibility 🤹‍♂️  
+
+Shopify promotes these themes as **“customizable”**, so clients assume **anything can be tweaked easily**. But when they request major layout changes, they’re hit with high dev costs because the code **wasn’t built for deep customization**.  
+
+### Upgrades Are a Pain 🔧  
+
+Shopify Theme Store themes get **updates**, but once a merchant customizes them, those updates **become a nightmare**. Merging updates with custom changes **isn't straightforward**, often making it **easier to rebuild than update**.  
+
+### More Expensive Long-Term 💰  
+
+Themes seem **cheap upfront**, but once you factor in **customization, maintenance, and debugging costs**, they **end up costing more** than just **building a proper custom theme from the start**.  
+
+## The Alternative: Custom Themes 🚀  
+
+So what’s the **better approach**? **Custom themes.**  
+
+### Faster, Cleaner, and Scalable 🏗️  
+
+A custom theme is **built for the actual needs of the business**, without unnecessary bloat. **It’s easier to scale, maintain, and update** without worrying about breaking unrelated features.  
+
+### A Component-Based Approach 🧩  
+
+Using **Atomic Design + Storybook**, developers can **build reusable components**, making the theme modular and easier to maintain. No more **fighting against the theme structure**—just **clean, organized code**.  
+
+### Performance-First Development ⚡  
+
+Instead of dealing with **third-party scripts, unused styles, and bloated assets**, a **custom theme focuses on speed, SEO, and smooth UX from the start**.  
+
+## Conclusion  
+
+Pre-built Shopify themes might seem like an **easy shortcut**, but in reality, they create **more problems than they solve**.  
+
+✅ **Custom themes > Bought themes** every single time.  
+✅ **More control, better performance, and easier scalability**.  
+✅ **Fewer headaches for both developers and merchants**.  
+
+### When is a Theme Store Theme *Actually* Okay? 🤔  
+
+Almost never. The only time it *might* make sense is for **small stores with zero customization needs**. But the moment a store wants to **scale, optimize, or make major changes**, a custom theme **is the better investment**.  
+
+If you’re serious about building a **Shopify store that lasts**, skip the theme store. **Build it right from the start.** 🚀  
