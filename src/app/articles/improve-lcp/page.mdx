@@ -1,0 +1,142 @@
+import { ArticleLayout } from '@/components/ArticleLayout'
+
+export const article = {
+  author: 'Omar Ghanaim',
+  date: '2025-02-11',
+  title: 'LCP in Shopify Themes: Making It Fast Without Losing Your Sanity',
+  description: "A deep dive into optimizing Largest Contentful Paint (LCP) in Shopify themes, covering fetchpriority, lazy loading, CSS bundling, and render delay reduction."
+}
+
+export const metadata = {
+  title: article.title,
+  description: article.description,
+}
+
+export default (props) => <ArticleLayout article={article} {...props} />
+
+## **Why LCP Matters (And Why It’s Often Slow)**  
+
+LCP (**Largest Contentful Paint**) is one of those fancy **Core Web Vitals** that Google cares about—and if Google cares, we have to care. A slow LCP makes your Shopify store **feel sluggish**, frustrates users, and can **hurt SEO rankings**.  
+
+A **snappy LCP** keeps shoppers happy, improves conversions, and makes your site **feel instant**. But in Shopify, we often run into:  
+
+- 🖼 **Images loading too late** (your hero section takes its sweet time showing up)  
+- 🏗 **CSS & JavaScript blocking rendering** (the browser is stuck waiting instead of painting the page)  
+- 🎨 **Unoptimized fonts & Shopify apps adding unnecessary delays**  
+
+
+
+## **How to Measure LCP Correctly**  
+
+Before optimizing LCP, you need **good data**—and where you get that data **makes a big difference**:  
+
+✅ **Performance Tab (Chrome DevTools)** → Shows **real-world data** based on **actual page load behavior**.  
+✅ **Lighthouse Tab** → Runs a **simulated test** in a controlled environment to estimate performance.  
+
+> 💡 **You can throttle both tabs** to simulate mobile devices or slower internet speeds. But I rely more on **Lighthouse for simulated data**, while the **Performance Tab is great for understanding what’s really happening.**  
+
+
+
+## **What an Optimized LCP Should Look Like**  
+
+In a **perfectly optimized world**, your LCP timing should roughly break down like this:  
+
+| **Metric**           | **Target %** | **What It Means** |
+|-|-|-|
+| **TTFB (Time to First Byte)** | 40% | Time Shopify’s server takes to respond |
+| **Load Delay** | 10% | Time before the browser starts loading the LCP element |
+| **Resource Download** | 40% | Time to fully load the LCP element |
+| **Render Delay** | 10% | Time the browser spends processing before displaying the LCP |
+
+### **Key Fixes for Each Stage:**  
+- **Load Delay:** Use `fetchpriority="high"` (if no `srcset` is used).  
+- **Resource Download:** Optimize images (WebP, AVIF, compression).  
+- **Render Delay:** Reduce render-blocking CSS & JavaScript.  
+
+
+
+## **Fixing LCP Bottlenecks in Shopify Themes**  
+
+### **1. The Simple But Effective Fix: `fetchpriority="high"` on the LCP Image**  
+✅ Helps the browser recognize that **this image is important and should be loaded ASAP**.  
+✅ **Doesn’t work with `srcset`—browsers ignore `fetchpriority="high"` when `srcset` is used.**  
+
+```html
+<img src="hero.jpg" fetchpriority="high" width="1200" height="600" alt="Hero Image">
+```
+
+
+
+### **2. Lazy Loading – When to Use It & When NOT to Use It**  
+❌ **Do NOT lazy load your LCP image**—this **increases Load Delay** since the browser won’t fetch it early.  
+✅ **Use lazy loading for images that aren’t immediately visible**, like:  
+   - **Below-the-fold images**  
+   - **Images hidden in mega menus, sliders, or popups**  
+
+```html
+<img src="product.jpg" loading="lazy" width="500" height="500" alt="Product Image">
+```
+
+
+
+### **3. Optimizing Image Load Time**  
+✔ Convert images to **WebP or AVIF** for smaller file sizes.  
+✔ Compress images properly **without losing quality**.  
+
+
+
+### **4. Preloading Fonts**  
+✔ Fonts can delay LCP because **text elements depend on them**.  
+✔ **Preload key fonts** to avoid delays:  
+
+```html
+<link rel="preload" href="your-font.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+```
+
+✔ Use **`font-display: swap`** so text appears even if fonts take a second to load.  
+
+
+
+### **5. Reducing Render Delay (The Hardest Part)**  
+❌ **Blocking CSS and JavaScript are your biggest enemies here.**  
+✔ **Bundling CSS into one file** reduces the number of requests. (I use a **bundler** for this.)  
+✔ **Defer non-essential JavaScript** so it doesn’t block rendering.  
+
+
+
+## **Case Study: Real Shopify Store LCP Optimization**  
+
+I tested a Shopify store using **Lighthouse**. Before optimizations:  
+
+⚠ **LCP was ~12 seconds**—brutal.  
+
+### **What I Optimized:**  
+✅ **Set `fetchpriority="high"` on the LCP image** (ensuring it loads early).  
+✅ **Lazy loaded all non-LCP images** (to free up bandwidth).  
+✅ **Preloaded fonts** (so text didn’t wait for fonts to render).  
+✅ **Bundled CSS using my bundler** (reducing the number of requests).  
+
+**💡 Results:**  
+🚀 LCP improved from **~12s → ~4s**  
+
+### **Next Steps for Further Optimization:**  
+🔹 **Split CSS into Critical & Non-Critical styles** to further reduce render delay.  
+🔹 **Monitor third-party Shopify apps**—many inject unnecessary CSS/JS that delays rendering.  
+
+> 💡 **Biggest remaining performance killers:** Shopify apps adding extra **CSS & JavaScript**. Always **audit your installed apps** and check their impact on performance!  
+
+
+
+## **Conclusion & Next Steps**  
+
+✔ **LCP is affected by multiple factors, but Render Delay is usually the hardest to fix.**  
+✔ **The Performance Tab gives real data, while Lighthouse is a simulation—use both.**  
+✔ **Setting `fetchpriority="high"` is a simple but strong improvement—but doesn’t work with `srcset`.**  
+✔ **Lazy loading is great, but don’t use it on the LCP image.**  
+✔ **Shopify apps injecting render-blocking CSS/JS can kill performance—monitor them closely!**  
+
+### **Next Steps:**  
+👉 **Check your Shopify store’s LCP in the Performance tab.**  
+👉 **Set `fetchpriority="high"` for your LCP image (if no `srcset` is used).**  
+👉 **Lazy load everything except your LCP image.**  
+👉 **Audit Shopify apps—see which ones slow you down.**  
