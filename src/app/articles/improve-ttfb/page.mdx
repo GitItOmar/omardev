@@ -1,0 +1,115 @@
+import { ArticleLayout } from '@/components/ArticleLayout'
+
+export const article = {
+  author: 'Omar Ghanaim',
+  date: '2025-02-13',
+  title: 'Optimizing TTFB in Shopify: A Journey of Unnecessary Struggles',
+  description: "A deep dive into optimizing Time to First Byte (TTFB) in Shopify themes, with real performance data and lessons learned from systematically debugging template rendering times.",
+}
+
+export const metadata = {
+  title: article.title,
+  description: article.description,
+}
+
+export default (props) => <ArticleLayout article={article} {...props} />
+
+Sometimes, you go on an optimization quest, only to realize **you could’ve solved the problem in five minutes if you had just checked the right thing first**. This is one of those stories.
+
+I set out to improve **Time to First Byte (TTFB)** in Shopify, armed with **WebPageTest, Lighthouse, Chrome’s Performance Tab, and the Shopify Theme Inspector Extension**. The results? **Painfully obvious in hindsight.** But hey, at least now I can share what *not* to do before you waste hours of your life.
+
+---
+
+## Setting Up the Tests
+
+Before randomly ripping apart my Shopify theme, I wanted **real** performance data.
+
+### Why I Ran 5 Tests and Used the Median
+
+Performance tests can be noisy. A single test might get impacted by **network congestion, Shopify’s caching, or random server spikes**. So instead of relying on a single test (which could be misleading), I ran **five tests** for each scenario and took the **median value**.
+
+#### Why not the average?
+
+- A single **slow** request can drastically **skew the average**.
+- The median **filters out extreme outliers**, giving a more reliable representation of typical performance.
+
+If you want a **realistic** TTFB measurement, **median > average** every time.
+
+---
+
+## The Experiment: Removing Stuff Until Shopify Gave Up
+
+To isolate the problem, I started **stripping down the theme step by step**, testing after each change.
+
+### Step 1: Delete 288 Assets
+✅ **Expectation:** Fewer files, better performance.  
+❌ **Reality:** **TTFB got worse (3.72s)**
+
+Why? Because **assets don’t impact TTFB**—Liquid execution does. *First mistake.*
+
+### Step 2: Remove Most of `theme.liquid`, Keeping Only Core Structure
+✅ **Expectation:** Moderate improvement.  
+✅ **Reality:** **TTFB dropped to 757.23ms**
+
+At this point, I kept the **header content inside the `<head>`** and the **layout content inside the `<body>`**, but removed everything else. This showed that **Liquid calculations within `theme.liquid` were a major contributor to slow TTFB**.
+
+### Step 3: Remove `index.json` While Keeping Everything Else Intact
+🚀 **TTFB: 461.73ms**
+
+This confirmed that **Liquid calculations inside `index.json` do contribute to TTFB, but the impact is relatively small** compared to `theme.liquid`.
+
+### Step 4: Remove Only the Header & Footer While Restoring Everything Else
+📉 **TTFB: 448.62ms**
+
+By restoring everything except the header and footer, I **isolated them as a major bottleneck**. This confirmed that **a significant portion of Liquid execution time was spent processing the header and footer.**
+
+---
+
+## The “Aha” Moment: Checking the Liquid Flame Graph (Way Too Late)
+
+After hours of messing around, I finally opened the **Shopify Theme Inspector**. And guess what?
+
+🔥 **The header alone accounted for 87% of Liquid execution time.**
+
+That’s when I realized: **I could have skipped everything and checked this first.**
+
+---
+
+## The Fix: Optimizing Liquid Execution
+
+Since deleting the header entirely wasn’t an option (tempting, though), I had to **rethink how it was processed**.
+
+### Solution 1: Store Header Data in a JSON Metafield
+Instead of forcing Liquid to **loop over dynamic navigation data**, I:
+
+- ✅ Stored **all navigation data in a single metafield**.
+- ✅ Used **a single loop** inside the header section.
+
+**Expected Benefit:** Less Liquid processing, faster TTFB.
+
+### Solution 2: Defer Header Rendering via JavaScript *(Backup Plan)*
+If the metafield approach wasn’t enough, I planned to:
+
+- ✅ Load a **lightweight placeholder header**.
+- ✅ Fetch and render the full header **with JavaScript** after page load.
+
+**Expected Benefit:** Move expensive calculations *off the critical path*.
+
+---
+
+## What I Learned (The Hard Way)
+
+1. **Don’t trust Lighthouse for TTFB.** It’s **wildly inaccurate** compared to WebPageTest.
+2. **Check the Liquid Flame Graph first.** Before touching a single asset, **analyze Liquid execution time**.
+3. **Liquid loops can be major performance killers.** Storing data in metafields or JSON **can drastically reduce TTFB**.
+4. **Deleting assets won’t fix TTFB.** If Liquid processing is slow, removing images and scripts won’t help.
+5. **Headers are expensive.** If it’s a global component with loops, **rethink how it’s structured**.
+6. **Always take the median, not the average.** One slow request can **ruin** an average, but the median gives a stable result.
+
+---
+
+## Final Thoughts: Don’t Be Like Me
+
+If you’re trying to optimize TTFB in Shopify, **start with the Liquid Flame Graph**. Learn from my mistake so you don’t spend hours deleting assets and questioning your life choices.
+
+I’ll be testing the **JSON metafield vs. JavaScript approach** next—if you’ve solved similar Liquid performance issues, let’s chat. Maybe together we can make Shopify a little less painful. 🚀
